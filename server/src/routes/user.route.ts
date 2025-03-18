@@ -88,16 +88,17 @@ router.get('/', (req: Request, res: Response) => {
     data: totalUsers.slice(startIndex, endIndex),
     totalCount: totalUsers.length,
   } as GetUsersResponse;
+  const sortValue = sort_by ? `sort_by=${sort_by}&` : '';
 
   // URL would need to get appended to the previous and next property
   if(startIndex > 0) {
     const previousPage = parseInt(page) - 1;
-    results.previous = `?sort_by=${sort_by}&size=${size}&page=${previousPage}`
+    results.previous = `?${sortValue}size=${size}&page=${previousPage}`
   }
 
   if(endIndex < results.totalCount) {
     const nextPage = parseInt(page) + 1;
-    results.next = `?sort_by=${sort_by}&size=${size}&page=${nextPage}`;
+    results.next = `?${sortValue}size=${size}&page=${nextPage}`;
   }
 
   res.send(results);
